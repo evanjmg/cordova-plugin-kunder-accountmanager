@@ -96,12 +96,12 @@ public class AccountManagerPlugin extends CordovaPlugin {
                     callbackContext.success(r);
                 }
                 else{
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, 'Failed to register account'));
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Failed to register account"));
                 }
 
             }
             else {
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, 'Account already exists'));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Account already exists"));
             }
 
             
@@ -167,7 +167,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
 
             Account [] accounts = accountManager.getAccountsByType(accountType);
             if(accounts.length == 0){
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, 'no accounts'));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, "no accounts"));
             }
             else{
                 String userAccount = accounts[0].name;
@@ -185,7 +185,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
             
             Account [] accounts = accountManager.getAccountsByType(accountType);
             if(accounts.length == 0){
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, 'no accounts'));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, "no accounts"));
             }
             else { 
                 String password;
@@ -209,7 +209,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
             Account [] accounts = accountManager.getAccountsByType(accountType);
             if(accounts.length == 0){
                 //No se pueden obtener los datos de la cuenta
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, 'no accounts created));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, "no accounts created"));
             }
             else{
                 String encryptedKey;
@@ -233,7 +233,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
                     callbackContext.success(r);
                 }
                 else{
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, 'Data is empty'));
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, "Data is empty"));
                 }
             }
         }
