@@ -192,7 +192,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
                 try{
                     password = AESCrypt.decrypt(ENCRYPTION_KEY, accountManager.getPassword(accounts[0]));
                 }catch (GeneralSecurityException e){
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.message));
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.toString()));
                     return false;
                 }
                 JSONObject r = new JSONObject();
@@ -216,7 +216,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
                 try{
                     encryptedKey = AESCrypt.encrypt(ENCRYPTION_KEY, keyData);
                 }catch (GeneralSecurityException e){
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.message));
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.toString()));
                     return false;
                 }
                
@@ -225,7 +225,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
                     try{
                         data = AESCrypt.decrypt(ENCRYPTION_KEY, data);
                     }catch (GeneralSecurityException e){
-                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.message));
+                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.toString()));
                         return false;
                     }
                     JSONObject r = new JSONObject();
