@@ -91,21 +91,17 @@ public class AccountManagerPlugin extends CordovaPlugin {
                     return false;
                 }
                 if(accountManager.addAccountExplicitly(account, password, userData)){
-                    // Toast.makeText(getApplicationContext(), "Registro de cuenta exitoso", Toast.LENGTH_LONG).show();
                     JSONObject r = new JSONObject();
                     r.put("responseCode", "ok");
                     callbackContext.success(r);
                 }
                 else{
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-                    // Toast.makeText(getApplicationContext(), "Error al registrar una cuenta!!!", Toast.LENGTH_LONG).show();
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, 'Failed to register account'));
                 }
 
             }
             else {
-                //Caso contrario, no se debe realizar el proceso
-                // Toast.makeText(getApplicationContext(), "Ya existe una cuenta!!!", Toast.LENGTH_LONG).show();
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, 'Account already exists'));
             }
 
             
@@ -171,8 +167,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
 
             Account [] accounts = accountManager.getAccountsByType(accountType);
             if(accounts.length == 0){
-                //No hay cuentas, retorna error
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, 'no accounts'));
             }
             else{
                 String userAccount = accounts[0].name;
@@ -190,15 +185,14 @@ public class AccountManagerPlugin extends CordovaPlugin {
             
             Account [] accounts = accountManager.getAccountsByType(accountType);
             if(accounts.length == 0){
-                //No hay cuentas, retorna error
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, 'no accounts'));
             }
             else { 
                 String password;
                 try{
                     password = AESCrypt.decrypt(ENCRYPTION_KEY, accountManager.getPassword(accounts[0]));
                 }catch (GeneralSecurityException e){
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.message));
                     return false;
                 }
                 JSONObject r = new JSONObject();
@@ -215,14 +209,14 @@ public class AccountManagerPlugin extends CordovaPlugin {
             Account [] accounts = accountManager.getAccountsByType(accountType);
             if(accounts.length == 0){
                 //No se pueden obtener los datos de la cuenta
-                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION));
+                callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.INVALID_ACTION, 'no accounts created));
             }
             else{
                 String encryptedKey;
                 try{
                     encryptedKey = AESCrypt.encrypt(ENCRYPTION_KEY, keyData);
                 }catch (GeneralSecurityException e){
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.message));
                     return false;
                 }
                
@@ -231,7 +225,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
                     try{
                         data = AESCrypt.decrypt(ENCRYPTION_KEY, data);
                     }catch (GeneralSecurityException e){
-                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                        callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, e.message));
                         return false;
                     }
                     JSONObject r = new JSONObject();
@@ -239,7 +233,7 @@ public class AccountManagerPlugin extends CordovaPlugin {
                     callbackContext.success(r);
                 }
                 else{
-                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+                    callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR, 'Data is empty'));
                 }
             }
         }
